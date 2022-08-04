@@ -11,5 +11,5 @@ load_dotenv()
 
 class FarmView(ListCreateAPIView):
 	authentication_classes = [TokenAuthentication]
-
+	queryset = Farm.objects.all()
 	serializer_class = FarmSerializer

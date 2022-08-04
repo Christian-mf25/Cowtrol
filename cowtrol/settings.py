@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 	'movements',
 	'rest_framework',
+	"rest_framework.authtoken",
 	'farms',
 	'areas',
 	'animals'
