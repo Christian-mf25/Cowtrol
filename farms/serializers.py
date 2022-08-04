@@ -1,7 +1,9 @@
-from cowtrol.exceptions import CustomException
 from rest_framework import serializers
 from django.db import IntegrityError
+
+from cowtrol.exceptions import CustomException
 from farms.models import Farm
+
 
 class FarmSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,7 +23,7 @@ class FarmSerializer(serializers.ModelSerializer):
             return Farm.objects.create_user(**validated_data)
 
         except IntegrityError:
-            raise CustomException("E-mail already exists", 422)
+            raise CustomException({"message": "E-mail already exists"}, 422)
 
 class LoginSerializer(serializers.Serializer):
 	email = serializers.EmailField(required=True)
