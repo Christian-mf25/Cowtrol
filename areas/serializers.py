@@ -26,3 +26,8 @@ class ListCreateAreaSerializer(serializers.ModelSerializer):
         attrs["area_name"] = attrs["area_name"].title()
         attrs["free_space"] = attrs["limit_space"]
         return super().validate(attrs)
+
+
+class ListAreaSerializer(serializers.Serializer):
+    area_name = serializers.CharField()
+    gmd = serializers.CharField()
