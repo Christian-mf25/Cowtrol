@@ -12,3 +12,7 @@ class Animal(models.Model):
     area = models.ForeignKey(
         "areas.Area", on_delete=models.CASCADE, related_name="animals"
     )
+
+    movement = models.ForeignKey(
+        "movements.Movement", on_delete=models.CASCADE, related_name="animals", null=True
+    )
