@@ -4,7 +4,6 @@ from areas.models import Area
 
 
 class ListCreateAreaSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Area
 
@@ -15,7 +14,7 @@ class ListCreateAreaSerializer(serializers.ModelSerializer):
             "free_space",
             "occupied_space",
             "gmd",
-]
+        ]
 
         extra_kwargs = {
             "id": {"read_only": True},
@@ -24,5 +23,6 @@ class ListCreateAreaSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, attrs):
+        attrs["area_name"] = attrs["area_name"].title()
         attrs["free_space"] = attrs["limit_space"]
         return super().validate(attrs)

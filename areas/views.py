@@ -21,10 +21,11 @@ class AreaView(generics.ListCreateAPIView):
 		received_data = request.data
 
 		for item in areas_list:
-			if received_data["area_name"] == item.area_name:
-				print(item.area_name)
-				print(received_data["area_name"])
-				raise CustomException({"message":"area_name already exists"}, 422)
+			if received_data["area_name"].title() == item.area_name:
+				raise CustomException(
+					{"message":"area_name already exists"}, 
+					422
+				)
 
 		return super().post(request, *args, **kwargs)
 
