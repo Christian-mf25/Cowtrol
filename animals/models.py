@@ -13,6 +13,4 @@ class Animal(models.Model):
         "areas.Area", on_delete=models.CASCADE, related_name="animals"
     )
 
-    movement = models.ForeignKey(
-        "movements.Movement", on_delete=models.CASCADE, related_name="animals", null=True
-    )
+    movement = models.ManyToManyField("movements.Movement", related_name="animals")
