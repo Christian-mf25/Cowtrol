@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.authentication import TokenAuthentication
 from farms.serializers import FarmSerializer, LoginSerializer
 from rest_framework.views import Request, Response
@@ -7,8 +7,8 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from rest_framework import status
 from dotenv import load_dotenv
+
 from farms.models import Farm
-from os import getenv
 
 load_dotenv()
 

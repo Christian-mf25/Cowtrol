@@ -1,4 +1,5 @@
 from django.urls import path
+
 from areas.views import AreaView
 
 urlpatterns = [
