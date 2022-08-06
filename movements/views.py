@@ -52,7 +52,7 @@ class MovementView(generics.ListCreateAPIView):
         movement.animals.set(animals)
 
         for item in animals:
-            Animal.objects.filter(name=item.name).update(
+            Animal.objects.filter(id=item.id).update(
                 area=area,
                 weight=item.weight + total_gain,
             )

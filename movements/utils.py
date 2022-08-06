@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_list_or_404
 from django.http import Http404
 
 from cowtrol.exceptions import CustomException
@@ -11,14 +11,19 @@ def check_animals_name_exist(serializer, name_list, farm):
         found_animals = []
 
         for item in name_list:
-            animal = get_object_or_404(Animal, name__icontains=item.title())
+			
+            animal_list = get_list_or_404(Animal, name=item.title())
+			
+            animal = [
+                item for item in animal_list if str(item.owner_id) == str(farm.id)
+            ][0]
+            
             if str(animal.owner_id) != str(farm.id):
                 raise Http404
 
             if animal in found_animals:
                 raise CustomException(
-                    {"message": f"animal '{animal.name}' is repeated in the list"},
-                    409
+                    {"message": f"animal '{animal.name}' is repeated in the list"}, 409
                 )
 
             found_animals.append(animal)
@@ -29,10 +34,7 @@ def check_animals_name_exist(serializer, name_list, farm):
         right_names_length = len(found_animals)
         wrong_name = serializer.data["animals"][right_names_length]
 
-        raise CustomException(
-            {"message": f"animal '{wrong_name}' not found"},
-            404
-        )
+        raise CustomException({"message": f"animal '{wrong_name}' not found"}, 404)
 
 
 def check_area_exists(area, farm):
@@ -45,17 +47,16 @@ def check_area_exists(area, farm):
             return item
 
     if not move_to_area:
-        raise CustomException(
-            {"message": "area not found"},
-            404
-        )
+        raise CustomException({"message": "area not found"}, 404)
 
 
 def check_move_area(animals, area):
     for item in animals:
         if item.area.id == area.id:
             raise CustomException(
-                {"message": f"animal '{item.name}' is already in area '{area.area_name}'"},
+                {
+                    "message": f"animal '{item.name}' is already in area '{area.area_name}'"
+                },
                 409,
             )
 
