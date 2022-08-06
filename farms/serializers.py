@@ -25,6 +25,7 @@ class FarmSerializer(serializers.ModelSerializer):
         except IntegrityError:
             raise CustomException({"message": "E-mail already exists"}, 422)
 
+
 class LoginSerializer(serializers.Serializer):
-	email = serializers.EmailField(required=True)
-	password = serializers.CharField(write_only=True, required=True)
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(write_only=True, required=True)

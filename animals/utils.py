@@ -39,7 +39,7 @@ def validate_retrieve_string_type(animal_names, farm_id):
         animal_list = [
             item.id for item in found_animals if str(item.owner_id) == str(farm_id)
         ]
-        
+
         if not animal_list:
             raise Http404
 
@@ -60,7 +60,6 @@ def validate_retrieve_list_type(animal_names, farm_id):
             for animal in filter_animal:
                 if str(animal.owner_id) == str(farm_id):
                     animal_list.append(animal.id)
-                
 
         for item in animal_list:
             if item not in duplicate_animal:
