@@ -3,7 +3,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 
 from animals.serializers import CreateAnimalSerializer, ListAnimalSerializer
-from animals.utils import check_animal_name, check_owner_area
+from animals.utils import (
+    check_animal_name,
+    check_owner_area,
+    validate_json_key_name,
+    validate_retrieve_list_type,
+    validate_retrieve_string_type,
+)
 from cowtrol.exceptions import CustomException
 from animals.models import Animal
 from areas.models import Area
@@ -18,10 +24,32 @@ class AnimalView(generics.ListCreateAPIView):
 
     def list(self, request, *args, **kwargs):
         farm_id = request.user.id
+        animals = Animal.objects.filter(owner_id=farm_id)
 
-        self.serializer_class = ListAnimalSerializer
-        self.queryset = Animal.objects.filter(owner_id=farm_id)
-        return super().list(request, *args, **kwargs)
+        if request.data:
+            validate_json_key_name(request)
+
+            animal_names = request.data["animal_names"]
+            if type(animal_names).__name__ != "list":
+                animal = validate_retrieve_string_type(animal_names, farm_id)
+
+                self.serializer_class = ListAnimalSerializer
+                self.queryset = Animal.objects.filter(id=animal[0])
+
+                return super().list(request, *args, **kwargs)
+
+            animal_list = validate_retrieve_list_type(animal_names, farm_id)
+
+            self.serializer_class = ListAnimalSerializer
+            self.queryset = [Animal.objects.get(id=item) for item in animal_list]
+
+            return super().list(request, *args, **kwargs)
+
+        else:
+            self.serializer_class = ListAnimalSerializer
+            self.queryset = animals
+
+            return super().list(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         animal_name = serializer.data["name"].title()
@@ -35,10 +63,7 @@ class AnimalView(generics.ListCreateAPIView):
         area = check_owner_area(area_list, farm)
 
         if area.limit_space <= area.occupied_space:
-            raise CustomException(
-				{"message": "this area is at maximum capacity"}, 
-				409
-			)
+            raise CustomException({"message": "this area is at maximum capacity"}, 409)
 
         check_animal_name(animal_name_list, farm)
 
