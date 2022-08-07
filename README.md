@@ -1,5 +1,3 @@
-# READ.ME (1)
-
 ## Sobre:
 
 A Cowtrol é uma plataforma para pastejo rotacionado, que basicamente é: permitir movimentar o gado entre áreas diferentes da fazenda que geram ganho de peso diferenciados aos animais.
