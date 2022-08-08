@@ -111,10 +111,10 @@ Rota insere uma área não cadastrada no banco de dados.
 | limit_space | number, integer | sim |
 | gmd | number, float | sim |
 
-Significado das chaves:
-─ area_name: Nome para definir uma área.
-─ limit_space: Capacidade de animais na área.
-─ gmd: Ganho médio diário.
+Significado das chaves: <br>
+─ area_name: Nome para definir uma área. <br>
+─ limit_space: Capacidade de animais na área. <br>
+─ gmd: Ganho médio diário. <br>
 
 Exemplo de requisição:
 
@@ -185,10 +185,10 @@ Rota insere um animal não cadastrado no banco de dados.
 | weight | number, float | sim |
 | area | string | sim |
 
-Significado das chaves:
-─ name: Nome para definir um animal.
-─ weight: Peso do animal.
-─ area: Nome da área que o animal está (A área deverá estar registrada).
+Significado das chaves: <br>
+─ name: Nome para definir um animal. <br>
+─ weight: Peso do animal. <br>
+─ area: Nome da área que o animal está (A área deverá estar registrada). <br>
 
 Exemplo de requisição:
 
@@ -276,10 +276,10 @@ Rota faz a movimentação de um ou mais animais, altera as chaves “limit_space
 | days | number | sim |
 | animals | lista de string | sim |
 
-Significado das chaves:
-─ move_to: A área para onde quer enviar o animal.
-─ days: Quantos dias ele ficará na área.
-─ animals: Os animais que estão sendo movido para a área.
+Significado das chaves: <br>
+─ move_to: A área para onde quer enviar o animal. <br>
+─ days: Quantos dias ele ficará na área. <br>
+─ animals: Os animais que estão sendo movido para a área. <br>
 
 Exemplo de requisição:
 
